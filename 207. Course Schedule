@@ -1,0 +1,43 @@
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<int> indegree(numCourses, 0);
+        vector<vector<int>> adj(numCourses);
+        set<pair<int, int>> seen;
+
+        // Build the graph
+        for (auto& pair : prerequisites) {
+            int course = pair[0];
+            int pre = pair[1];
+            if (seen.find({course, pre}) != seen.end()) continue;
+            seen.insert({course, pre});
+            adj[pre].push_back(course);
+            indegree[course]++;
+        }
+
+        queue<int> q;
+
+        // Push all nodes with 0 indegree
+        for (int i = 0; i < numCourses; ++i) {
+            if (indegree[i] == 0)
+                q.push(i);
+        }
+
+        int completed = 0;
+
+        // BFS: Topological sort
+        while (!q.empty()) {
+            int curr = q.front();
+            q.pop();
+            completed++;
+
+            for (int neighbor : adj[curr]) {
+                indegree[neighbor]--;
+                if (indegree[neighbor] == 0)
+                    q.push(neighbor);
+            }
+        }
+
+        return completed == numCourses;
+    }
+};
