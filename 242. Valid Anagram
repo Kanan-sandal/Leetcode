@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if(s.size()!=t.size()){
+            return false;
+        }
+        unordered_map<char,int> mp;
+        int n=s.size();
+        for(int i=0;i<n;i++){
+            char ch=s[i];
+            mp[ch]++;
+        }
+        for(int i=0;i<t.size();i++){
+            char c1=t[i];
+            auto it=mp.find(c1);
+            if(it!=mp.end()){
+                if(it->second>0){
+                    mp[c1]--;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }
+        return true;
+        
+    }
+};
