@@ -1,0 +1,47 @@
+1) Brute Force
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> res;
+        for(int n:nums1){
+            bool found=false;
+            bool greaterfound=false;
+            for(int x:nums2){
+                if(x==n) found=true;
+                if(found && x>n){
+                    res.push_back(x);
+                    greaterfound=true;
+                    break;
+                }
+            }
+            if(!greaterfound) res.push_back(-1);
+        }
+        return res;
+    }
+};
+
+2)Optimized
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        unordered_map<int,int> greater;
+        stack<int> st;
+
+        for(int num:nums2){
+            while(!st.empty() && num>st.top()){
+                greater[st.top()]=num;
+                st.pop();
+            }
+            st.push(num);
+        }
+        vector<int> res;
+        for(int num:nums1){
+            if(greater.count(num)){
+                res.push_back(greater[num]);
+            }else{
+                res.push_back(-1);
+            }
+        }
+        return res;
+    }
+};
