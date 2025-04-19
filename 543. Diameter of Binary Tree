@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int diameter=0;
+    int depth(TreeNode* root){
+        if(!root) return 0;
+
+        int leftdepth=depth(root->left);
+        int rightdepth=depth(root->right);
+
+        diameter=max(diameter,leftdepth+rightdepth);
+
+        return max(leftdepth,rightdepth)+1;
+    }
+    int diameterOfBinaryTree(TreeNode* root) {
+        depth(root);
+        return diameter;
+    }
+};
