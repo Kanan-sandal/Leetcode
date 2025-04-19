@@ -1,0 +1,46 @@
+1)BRUTE FORCE
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        vector<vector<int>> result;
+        sort(intervals.begin(),intervals.end());
+
+        for (int i = 0; i < intervals.size(); ++i) {
+            bool merged = false;
+
+            for (int j = 0; j < result.size(); ++j) {
+                if (intervals[i][0] <= result[j][1] && intervals[i][1] >= result[j][0]) {
+                    result[j][0] = min(result[j][0], intervals[i][0]);
+                    result[j][1] = max(result[j][1], intervals[i][1]);
+                    merged = true;
+                    break;
+                }
+            }
+
+            if (!merged) {
+                result.push_back(intervals[i]);
+            }
+        }
+
+        return result;
+    }
+};
+
+2)OPTIMIZED
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& it) {
+        sort(it.begin(),it.end());
+        vector<vector<int>> m;
+        m.push_back(it[0]);
+        for(int i=1;i<it.size();i++){
+            if(it[i][0]<=m.back()[1]){
+                m.back()[1]=max(m.back()[1],it[i][1]);
+            }else
+            m.push_back(it[i]);
+        }
+        return m;
+    }
+};
+
+
