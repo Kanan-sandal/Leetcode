@@ -1,0 +1,37 @@
+class MyQueue {
+private:
+    stack<int> instack,outstack;
+
+    void transferintoout(){
+        if(outstack.empty()){
+            while(!instack.empty()){
+                outstack.push(instack.top());
+                instack.pop();
+            }
+        }
+    }
+public:
+    MyQueue() {
+        
+    }
+    
+    void push(int x) {
+        instack.push(x);
+    }
+    
+    int pop() {
+        transferintoout();
+        int val=outstack.top();
+        outstack.pop();
+        return val;
+    }
+    
+    int peek() {
+        transferintoout();
+        return outstack.top();
+    }
+    
+    bool empty() {
+        return instack.empty() && outstack.empty();
+    }
+};
