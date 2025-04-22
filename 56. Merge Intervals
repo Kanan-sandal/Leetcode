@@ -29,18 +29,19 @@ public:
 2)OPTIMIZED
 class Solution {
 public:
-    vector<vector<int>> merge(vector<vector<int>>& it) {
-        sort(it.begin(),it.end());
-        vector<vector<int>> m;
-        m.push_back(it[0]);
-        for(int i=1;i<it.size();i++){
-            if(it[i][0]<=m.back()[1]){
-                m.back()[1]=max(m.back()[1],it[i][1]);
-            }else
-            m.push_back(it[i]);
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        if(intervals.empty()) return{};
+        sort(intervals.begin(),intervals.end());
+        vector<vector<int>> result;
+        result.push_back(intervals[0]);
+        for(int i=1;i<intervals.size();i++){
+            if(intervals[i][0]<=result.back()[1]){
+                result.back()[1]=max(result.back()[1],intervals[i][1]);
+            }else{
+                result.push_back(intervals[i]);
+            }
         }
-        return m;
+        return result;
     }
 };
-
 
