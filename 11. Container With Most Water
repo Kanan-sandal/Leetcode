@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int leftpointer=0;
+        int maxwater=0;
+        int rightpointer=height.size()-1;
+        while(leftpointer<rightpointer){
+            int width=rightpointer-leftpointer;
+            int ht=min(height[rightpointer],height[leftpointer]);
+            int area=width*ht;
+            maxwater=max(maxwater,area);
+            if(height[leftpointer]<height[rightpointer]){
+                leftpointer++;
+            }else{
+                rightpointer--;
+            }
+        }
+        return maxwater;
+    }
+};
