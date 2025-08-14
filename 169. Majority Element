@@ -65,7 +65,7 @@ public:
 
 
 
-NOT THE BEST:
+NOT THE BEST:     O(Nlog N)+O(N)
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
