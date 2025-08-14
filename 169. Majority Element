@@ -84,7 +84,7 @@ public:
 
 
 
-BEST BOYER MOORE WITH EXTRA VERIFICATION :
+BEST BOYER MOORE WITH EXTRA VERIFICATION :  time: O(N)     space:O(1)
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
