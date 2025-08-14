@@ -1,0 +1,80 @@
+BRUTE FORCE:         O(N^2)
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        vector<int> list;
+        for(int i=0;i<nums.size();i++){
+            if(list.size()==0 || list[0]!=nums[i]){
+                int count=0;
+                for(int j=0;j<nums.size();j++){
+                    if(nums[j]==nums[i]){
+                        count++;
+                    }
+                }
+                if(count>nums.size()/3){
+                    list.push_back(nums[i]);
+                }
+            }
+            if(list.size()==2) break;
+        }
+        return list;
+    }
+};
+
+
+BETTER:
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        map<int,int> mp;
+        vector<int> list;
+        int mm=nums.size()/3;
+        for(int i=0;i<nums.size();i++){
+            mp[nums[i]]++;
+            if(mp[nums[i]]==mm+1){
+                list.push_back(nums[i]);
+            }
+        }
+        return list;
+    }
+};
+
+
+
+OPTIMAL:                O(2N)
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        int count1=0;
+        int count2=0;
+        int el1=0;
+        int el2=0;
+        for(int i=0;i<nums.size();i++){
+            if(count1==0 && nums[i]!=el2){
+                count1=1;
+                el1=nums[i];
+            }else if(count2==0 && nums[i]!=el1){
+                count2=1;
+                el2=nums[i];
+            }else if(el1==nums[i]){
+                count1++;
+            }else if(el2==nums[i]){
+                count2++;
+            }else{
+                count1--;
+                count2--;
+            }
+        }
+        vector<int> list;
+        count1=0;
+        count2=0;
+        for(int i=0;i<nums.size();i++){
+            if(el1==nums[i]) count1++;
+            else if(el2==nums[i]) count2++;
+        }
+        int mini= nums.size()/3;
+        if(count1>mini) list.push_back(el1);
+        if(count2>mini) list.push_back(el2);
+        return list;
+    }
+};
