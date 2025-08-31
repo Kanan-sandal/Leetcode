@@ -1,3 +1,4 @@
+tc: O(n * m)    sc:O(1)
 string minWindow(string s, string t)
 {
 	string minwin="";
