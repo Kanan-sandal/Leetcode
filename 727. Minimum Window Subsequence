@@ -1,0 +1,30 @@
+string minWindow(string s, string t)
+{
+	string minwin="";
+	int j=0,minlen=s.size()+1;
+	for(int i=0;i<s.size();i++){
+		if(s.at(i)==t.at(j)){
+			j++;
+			if(j==t.size()){
+				int end=i;
+				j--;
+
+				while(j>=0){
+					if(t.at(j)==s.at(i)){
+						j--;
+					}
+					i--;
+				}
+				i++;
+				j++;
+
+				if(end-i+1<minlen){
+					minlen=end-i+1;
+
+					minwin=s.substr(i,minlen);
+				}
+			}
+		}
+	}
+	return minwin;
+}
