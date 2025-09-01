@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> findFreeIntervals(vector<vector<int>> &schedules) {
+    vector<int> result;
+    if(schedules.empty()) return result;
+    sort(schedules.begin(),schedules.end());
+
+    vector<vector<int>> merged;
+    for(auto& interval: schedules){
+        if(merged.empty() || merged.back()[1]<interval[0]){
+            merged.push_back(interval);
+        }else{
+            merged.back()[1]=max(merged.back()[1],interval[1]);
+        }
+    }
+    for(int i=1;i<merged.size();i++){
+        result.push_back(merged[i-1][1]);
+        result.push_back(merged[i][0]);
+    }
+    return result;
+}
