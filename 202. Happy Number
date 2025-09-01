@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int gennext(int n){
+        int sum=0;
+        while(n){
+            int digit=n%10;
+            sum+= digit*digit;
+            n/=10;
+        }
+        return sum;
+    }
+    bool isHappy(int n) {
+        int slow=n, fast=n;
+        do{
+            slow=gennext(slow);
+            fast=gennext(gennext(fast));
+        }while(slow!=fast);
+
+        return slow==1;
+    }
+};
