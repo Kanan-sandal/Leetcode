@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool isPossible(vector<int>& nums,int k,long long mid){
+        int count=1;
+        long long sum=0;
+        for(int num:nums){
+            if(sum+num>mid){
+                count++;
+                sum=num;
+                if(count>k) return false;
+            }else{
+                sum+=num;
+            }
+        }
+        return true;
+    }
+    int splitArray(vector<int>& nums, int k) {
+        long long left=*max_element(nums.begin(),nums.end());
+        long long right=accumulate(nums.begin(),nums.end(),0LL);
+        int ans=0;
+        while(left<=right){
+            long long mid=left+(right-left)/2;
+            if(isPossible(nums,k,mid)){
+                ans=mid;
+                right=mid-1;
+            }else{
+                left=mid+1;
+            }
+        }
+        return ans;
+    }
+};
