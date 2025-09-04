@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string reorganizeString(string s) {
+        unordered_map<char,int> freq;
+        for(auto c:s) freq[c]++;
+
+        priority_queue<pair<int,char>> maxheap;
+        for(auto& p: freq){
+            maxheap.push({p.second,p.first});
+        }
+        string result="";
+        pair<int,char> prev={0,'#'};
+        while(!maxheap.empty()){
+            auto[count,ch]=maxheap.top();
+            maxheap.pop();
+
+            result+=ch;
+            if(prev.first>0) maxheap.push(prev);
+
+            count--;
+            prev={count,ch};
+        }
+        return(result.size()==s.size())?result:"";
+    }
+};
