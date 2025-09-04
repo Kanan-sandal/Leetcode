@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        unordered_map<char,int> freq;
+        for(char c:tasks) freq[c]++;
+
+        priority_queue<int> maxheap;
+        for(auto& p:freq) maxheap.push(p.second);
+
+        int time=0;
+        queue<pair<int,int>> cooldown;
+
+        while(!maxheap.empty() || !cooldown.empty()){
+            time++;
+
+            if(!maxheap.empty()){
+                int count=maxheap.top()-1;
+                maxheap.pop();
+                if(count>0) cooldown.push({count,time+n});
+            }
+            if(!cooldown.empty() && cooldown.front().second==time){
+                maxheap.push(cooldown.front().first);
+                cooldown.pop();
+            }
+        }
+        return time;
+    }
+};
