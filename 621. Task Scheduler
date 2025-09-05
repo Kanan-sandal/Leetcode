@@ -26,3 +26,19 @@ public:
         return time;
     }
 };
+
+
+
+OPTIMIZED MATHEMATICAL SOLUTION:
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        vector<int> freq(26,0);
+        for(char t: tasks) freq[t-'A']++;
+
+        int maxfreq=*max_element(freq.begin(),freq.end());
+        int maxcount=count(freq.begin(),freq.end(),maxfreq);
+
+        return max((int)tasks.size(),(maxfreq-1)*(n+1)+maxcount);
+    }
+};
