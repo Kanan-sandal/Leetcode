@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+        unordered_map<string,string> emailtoname;
+        unordered_map<string,vector<string>> graph;
+
+        for(auto& acc:accounts){
+            string name=acc[0];
+            for(int i=1;i<acc.size();i++){
+                emailtoname[acc[i]]=name;
+                if(i==1) continue;
+
+                graph[acc[1]].push_back(acc[i]);
+                graph[acc[i]].push_back(acc[1]);
+            }
+        }
+        unordered_set<string> visited;
+        vector<vector<string>> result;
+
+        function<void(string,vector<string>&)>dfs=[&](string email,vector<string>& component){
+            visited.insert(email);
+            component.push_back(email);
+            for(auto& nei:graph[email]){
+                if(!visited.count(nei)) dfs(nei,component);
+            }
+        };
+
+        for(auto&[email,_]: emailtoname){
+            if(!visited.count(email)){
+                vector<string> component;
+                dfs(email,component);
+                sort(component.begin(),component.end());
+                component.insert(component.begin(),emailtoname[email]);
+                result.push_back(component);
+            }
+        }
+        return result;
+    }
+};
