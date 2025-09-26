@@ -37,3 +37,44 @@ public:
         return (minlen==INT_MAX)? "":s.substr(start,minlen);
     }
 };
+
+
+
+
+class Solution{
+public:
+    string minWindow(string s,string t){
+        if(t.size()>s.size()) return "";
+        unordered_map<char,int> need,window;
+        for(char c:t) need[c]++;
+        int have=0,needcount=need.size();
+        int left=0,start=0,minlen=INT_MAX;
+
+        for(int right=0;right<s.size();right++){
+            char c=s[right];
+            window[c]++;
+
+            if(need.count(c) && window[c]==need[c]){
+                have++;
+            }
+
+            while(have==needcount){
+                int winlen=right-left+1;
+                if(winlen<minlen){
+                    minlen=winlen;
+                    start=left;
+                }
+                char d=s[left];
+                window[d]--;
+
+                if(need.count(d) && window[d]<need[d]){
+                    have--;
+                }
+                left++;
+            }
+        }
+        if(minlen==INT_MAX) return "";
+
+        return s.substr(start,minlen);
+    }
+};
