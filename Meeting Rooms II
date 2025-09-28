@@ -33,3 +33,33 @@ public:
         return minHeap.size();
     }
 };
+
+
+
+
+TWO POINTER SWEEP LINE APPROACH:
+class Solution{
+public:
+    int minMeetingRooms(vector<Interval>& intervals){
+        if(intervals.empty()) return 0;
+
+        vector<int> starts,ends;
+        for(auto &it : intervals){
+            starts.push_back(it.start);
+            ends.push_back(it.end);
+        }
+
+        sort(starts.begin(),starts.end());
+        sort(ends.begin(),ends.end());
+
+        int rooms=0,endptr=0;
+        for(int i=0;i<starts.size();i++){
+            if(starts[i]<ends[endptr]){
+                rooms++;
+            }else{
+                endptr++;
+            }
+        }
+        return rooms;
+    }
+};
